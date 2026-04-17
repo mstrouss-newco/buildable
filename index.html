@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Buildable Kids — Build, Play & Learn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,700;0,800;0,900;1,800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coral:#FF6B6B;--coral-dk:#D94F4F;--coral-lt:#FFF0F0;
+  --purple:#7C5CFC;--purple-dk:#6142E8;--purple-lt:#F0EDFF;
+  --mint:#00C48C;--mint-lt:#E5FAF4;
+  --sun:#FFB300;--sun-lt:#FFF8E0;
+  --sky:#3EB5F1;--sky-lt:#EBF7FE;
+  --pink:#FF6EB4;--pink-lt:#FFF0F8;
+  --ink:#1E1F2E;--ink2:#3D3F56;--muted:#7B7E9A;
+  --bg:#FAFAF9;--white:#fff;
+  --border:rgba(30,31,46,.09);
+  --r:14px;--rXL:24px;--rPill:100px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"Nunito Sans",sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto;z-index:200;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(250,250,249,.96);backdrop-filter:blur(16px);border-bottom:2px solid var(--border)}
+.logo{font-family:"Nunito",sans-serif;font-weight:900;font-size:22px;color:var(--ink);letter-spacing:-0.5px}
+.logo-pip{width:7px;height:7px;border-radius:50%;background:var(--coral);margin-left:2px;margin-bottom:7px;display:inline-block}
+nav ul{list-style:none;display:flex;gap:2px}
+nav ul a{font-size:13px;font-weight:700;color:var(--muted);padding:7px 13px;border-radius:var(--rPill);transition:all .18s}
+nav ul a:hover{color:var(--purple);background:var(--purple-lt)}
+.nav-right{display:flex;gap:8px;align-items:center}
+.nav-login{font-family:"Nunito",sans-serif;font-size:13px;font-weight:800;background:transparent;color:var(--ink2);border:2px solid var(--border);padding:9px 20px;border-radius:var(--rPill);cursor:pointer;transition:all .18s}
+.nav-login:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.nav-cta{font-family:"Nunito",sans-serif;font-size:13px;font-weight:800;color:#fff;border:none;cursor:pointer;padding:10px 22px;border-radius:var(--rPill);background:linear-gradient(135deg,var(--purple),var(--coral));box-shadow:0 4px 16px rgba(124,92,252,.38);transition:transform .12s,box-shadow .12s}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 7px 22px rgba(124,92,252,.48)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 80px;background:linear-gradient(150deg,#FFF5F0 0%,#F2EFFE 45%,#EDFCF5 100%);position:relative;overflow:hidden}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;pointer-events:none;opacity:.13}
+.hero::before{width:520px;height:520px;background:var(--purple);top:-160px;right:-130px}
+.hero::after{width:380px;height:380px;background:var(--mint);bottom:-90px;left:-90px}
+.hero-chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:2px solid rgba(124,92,252,.18);border-radius:var(--rPill);padding:7px 16px 7px 10px;font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:28px;z-index:1;position:relative;box-shadow:0 2px 14px rgba(124,92,252,.1)}
+.chip-dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 3px rgba(0,196,140,.2)}
+h1{font-family:"Nunito",sans-serif;font-weight:900;font-size:clamp(42px,7vw,80px);line-height:1.04;letter-spacing:-1.5px;margin-bottom:22px;z-index:1;position:relative}
+.h1-2{font-style:italic;color:var(--purple)}
+.h1-3{color:var(--coral)}
+.hero-sub{font-size:clamp(16px,2vw,18px);line-height:1.75;color:var(--ink2);font-weight:600;max-width:540px;margin-bottom:38px;z-index:1;position:relative}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;z-index:1;position:relative;margin-bottom:64px}
+.btn-primary{font-family:"Nunito",sans-serif;font-weight:800;font-size:17px;color:#fff;border:none;padding:15px 36px;border-radius:var(--rPill);cursor:pointer;background:linear-gradient(135deg,var(--purple),#9B6FFF);box-shadow:0 5px 18px rgba(124,92,252,.44);transition:transform .12s,box-shadow .12s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 9px 28px rgba(124,92,252,.52)}
+.btn-ghost{font-family:"Nunito",sans-serif;font-weight:800;font-size:17px;background:#fff;color:var(--ink);border:2px solid var(--border);padding:14px 30px;border-radius:var(--rPill);cursor:pointer;transition:all .18s}
+.btn-ghost:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-lt)}
+
+/* PHONES - all same size, bottom-aligned */
+.phones-section{display:flex;gap:20px;justify-content:center;align-items:flex-start;z-index:1;position:relative;width:100%;max-width:960px}
+.phone-col{display:flex;flex-direction:column;align-items:center;gap:16px;flex:1;max-width:280px}
+
+.phone-caption{text-align:center}
+.phone-step{display:inline-block;font-family:"Nunito",sans-serif;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;border-radius:var(--rPill);padding:4px 12px;margin-bottom:6px}
+.phone-desc{font-size:13px;font-weight:700;color:var(--ink2)}
+
+/* SECTIONS */
+section{padding:96px 24px}
+.wrap{max-width:1100px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--purple);margin-bottom:14px}
+.eyebrow::before{content:"";width:16px;height:3px;background:currentColor;border-radius:2px;display:block}
+h2{font-family:"Nunito",sans-serif;font-weight:900;font-size:clamp(28px,4vw,46px);line-height:1.1;letter-spacing:-.5px;margin-bottom:14px}
+.sub{font-size:17px;color:var(--ink2);line-height:1.72;max-width:520px;margin-bottom:50px;font-weight:600}
+
+/* LIFECYCLE (play + customize) */
+.lifecycle{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:3px;margin-top:8px}
+.lc-step{background:var(--white);border:2px solid var(--border);border-radius:var(--rXL);padding:28px 24px;position:relative;transition:transform .2s,box-shadow .2s}
+.lc-step:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(30,31,46,.1)}
+.lc-arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);width:24px;height:24px;background:var(--purple);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:900;z-index:2}
+@media(max-width:900px){.lc-arrow{display:none}}
+.lc-num{font-family:"Nunito",sans-serif;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.lc-icon{font-size:32px;margin-bottom:12px;display:block}
+.lc-title{font-family:"Nunito",sans-serif;font-weight:800;font-size:18px;margin-bottom:8px}
+.lc-desc{font-size:13px;color:var(--ink2);line-height:1.65;font-weight:600}
+
+/* CREATION TYPES */
+.types-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.type-card{border-radius:var(--rXL);padding:30px 26px;border:2px solid transparent;transition:transform .2s,box-shadow .2s;cursor:pointer;position:relative}
+.type-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(30,31,46,.12)}
+.tc-badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;border-radius:var(--rPill);padding:4px 12px;margin-bottom:16px}
+.tc-emoji{font-size:36px;margin-bottom:12px;display:block}
+.tc-title{font-family:"Nunito",sans-serif;font-weight:900;font-size:20px;margin-bottom:8px}
+.tc-desc{font-size:13px;line-height:1.65;font-weight:600;margin-bottom:14px}
+.tc-tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;padding:5px 12px;border-radius:var(--rPill)}
+.tc-tag::before{content:"🎓";font-size:11px}
+.coming-soon{position:absolute;top:18px;right:18px;background:rgba(30,31,46,.08);border:1.5px solid rgba(30,31,46,.12);border-radius:var(--rPill);padding:3px 10px;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+
+/* MARKETPLACE */
+.market-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:14px}
+.market-tabs{display:flex;gap:6px}
+.mtab{font-family:"Nunito",sans-serif;font-size:12px;font-weight:800;padding:7px 16px;border-radius:var(--rPill);border:1.5px solid var(--border);color:var(--muted);cursor:pointer;background:var(--white);transition:all .18s}
+.mtab.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.game-card{background:var(--white);border:2px solid var(--border);border-radius:var(--rXL);overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:pointer}
+.game-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(30,31,46,.12)}
+.game-thumb{height:130px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:48px}
+.game-thumb-overlay{position:absolute;inset:0;background:rgba(0,0,0,.0);transition:background .2s}
+.game-card:hover .game-thumb-overlay{background:rgba(0,0,0,.15)}
+.play-btn{position:absolute;width:40px;height:40px;background:rgba(255,255,255,.95);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;opacity:0;transition:opacity .2s;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.game-card:hover .play-btn{opacity:1}
+.game-info{padding:14px}
+.game-title{font-family:"Nunito",sans-serif;font-weight:800;font-size:15px;margin-bottom:4px}
+.game-author{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:10px}
+.game-stats{display:flex;gap:10px;align-items:center}
+.gstat{display:flex;align-items:center;gap:4px;font-size:12px;font-weight:800;color:var(--muted)}
+.gstat.hearts{color:var(--coral)}
+.featured-badge-game{position:absolute;top:10px;left:10px;background:var(--sun);color:var(--ink);font-family:"Nunito",sans-serif;font-size:10px;font-weight:900;padding:3px 10px;border-radius:var(--rPill);letter-spacing:.5px}
+
+/* DASHBOARD */
+.db-wrap{background:var(--ink);border-radius:var(--rXL);overflow:hidden;box-shadow:0 24px 60px rgba(30,31,46,.2)}
+.db-bar{background:#111220;height:42px;display:flex;align-items:center;padding:0 18px;gap:7px;border-bottom:1.5px solid rgba(255,255,255,.05)}
+.db-dot{width:10px;height:10px;border-radius:50%}
+.db-inner{display:grid;grid-template-columns:210px 1fr;min-height:440px}
+.db-side{background:#0C0D18;border-right:1.5px solid rgba(255,255,255,.04);padding:18px 14px;display:flex;flex-direction:column;gap:4px}
+.db-sec-lbl{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.18);padding:6px 12px;margin-top:8px;margin-bottom:2px}
+.db-nav{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;transition:background .18s}
+.db-nav:hover{background:rgba(255,255,255,.04)}
+.db-nav.on{background:rgba(124,92,252,.18)}
+.db-nav-ico{font-size:15px;width:20px;text-align:center}
+.db-nav-lbl{font-size:13px;font-weight:700;color:rgba(255,255,255,.45)}
+.db-nav.on .db-nav-lbl{color:#fff}
+.db-main{padding:22px;display:flex;flex-direction:column;gap:18px}
+.db-hdr{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px}
+.db-name{font-family:"Nunito",sans-serif;font-size:18px;font-weight:800;color:#fff}
+.db-meta{font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;font-weight:600}
+.db-pill{background:rgba(0,196,140,.14);border:1.5px solid rgba(0,196,140,.28);border-radius:var(--rPill);padding:6px 14px;font-size:12px;font-weight:800;color:var(--mint)}
+.db-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.db-stat{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.06);border-radius:14px;padding:14px 16px}
+.db-stat-n{font-family:"Nunito",sans-serif;font-size:26px;font-weight:900;color:#fff;line-height:1}
+.db-stat-l{font-size:11px;color:rgba(255,255,255,.35);font-weight:700;margin-top:4px}
+.db-section-hdr{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:10px}
+.subj-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.subj-name{font-size:13px;font-weight:700;color:rgba(255,255,255,.72);width:120px;flex-shrink:0}
+.subj-bar-bg{flex:1;height:7px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden}
+.subj-bar{height:100%;border-radius:4px}
+.subj-score{font-size:12px;font-weight:800;width:36px;text-align:right;flex-shrink:0}
+.diff-box{background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.06);border-radius:14px;padding:14px 18px}
+.diff-lbl{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:10px}
+.diff-btns{display:flex;gap:6px}
+.diff-btn{flex:1;padding:8px;border-radius:var(--rPill);font-family:"Nunito",sans-serif;font-size:12px;font-weight:800;border:1.5px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);cursor:pointer;background:transparent;transition:all .18s;text-align:center}
+.diff-btn.on.easy{background:rgba(0,196,140,.18);border-color:var(--mint);color:var(--mint)}
+.diff-btn.on.med{background:rgba(255,179,0,.18);border-color:var(--sun);color:var(--sun)}
+.diff-btn.on.hard{background:rgba(255,107,107,.18);border-color:var(--coral);color:var(--coral)}
+.diff-note{margin-top:9px;font-size:12px;font-weight:600;color:rgba(255,255,255,.3)}
+
+/* VISIBILITY */
+.vis-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.vis-card{border-radius:var(--rXL);padding:36px 32px;border:2px solid var(--border);transition:transform .2s,box-shadow .2s}
+.vis-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(30,31,46,.1)}
+.vis-card.pub{background:linear-gradient(130deg,#EDFCF5,#fff);border-color:rgba(0,196,140,.3)}
+.vis-card.prv{background:linear-gradient(130deg,#F0EDFF,#fff);border-color:rgba(124,92,252,.25)}
+.vis-icon{font-size:38px;margin-bottom:16px;display:block}
+.vis-h{font-family:"Nunito",sans-serif;font-weight:900;font-size:22px;margin-bottom:10px}
+.vis-desc{font-size:14px;color:var(--ink2);line-height:1.7;font-weight:600;margin-bottom:20px}
+.vis-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.vis-list li{font-size:13px;font-weight:700;color:var(--ink2);display:flex;gap:8px;align-items:flex-start}
+.vis-list li::before{content:"✓";font-weight:900;flex-shrink:0}
+.vis-card.pub .vis-list li::before{color:var(--mint)}
+.vis-card.prv .vis-list li::before{color:var(--purple)}
+
+/* PRICING */
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:18px;align-items:start}
+.pc{background:var(--white);border:2px solid var(--border);border-radius:var(--rXL);padding:34px 30px;position:relative;transition:transform .2s,box-shadow .2s}
+.pc:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(30,31,46,.1)}
+.pc.feat{border-color:var(--purple);background:var(--purple)}
+.feat-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--sun);color:var(--ink);font-family:"Nunito",sans-serif;font-size:11px;font-weight:900;padding:4px 16px;border-radius:var(--rPill);white-space:nowrap}
+.p-tier{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.pc.feat .p-tier{color:rgba(255,255,255,.55)}
+.p-amt{font-family:"Nunito",sans-serif;font-weight:900;font-size:46px;line-height:1;margin-bottom:4px}
+.pc.feat .p-amt{color:#fff}
+.p-amt sup{font-size:20px;vertical-align:top;margin-top:9px}
+.p-per{font-size:14px;color:var(--muted);margin-bottom:22px;font-weight:600}
+.pc.feat .p-per{color:rgba(255,255,255,.5)}
+.p-div{height:2px;background:var(--border);margin-bottom:22px}
+.pc.feat .p-div{background:rgba(255,255,255,.15)}
+.p-feats{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:28px}
+.p-feats li{font-size:13px;font-weight:600;display:flex;gap:9px;align-items:flex-start;color:var(--ink2)}
+.pc.feat .p-feats li{color:rgba(255,255,255,.82)}
+.p-feats li::before{content:"✓";font-weight:900;color:var(--mint);flex-shrink:0}
+.p-feats li.off{opacity:.45}
+.p-feats li.off::before{content:"—";color:currentColor}
+.p-btn{width:100%;padding:13px;border-radius:var(--rPill);font-family:"Nunito",sans-serif;font-size:14px;font-weight:800;cursor:pointer;border:none;transition:all .18s}
+.p-btn.ghost{background:transparent;border:2px solid var(--border);color:var(--ink)}
+.p-btn.ghost:hover{border-color:var(--ink);background:var(--ink);color:#fff}
+.p-btn.fill{background:#fff;color:var(--purple)}
+.p-btn.fill:hover{background:var(--sun);color:var(--ink)}
+
+/* BETA */
+.beta-band{background:linear-gradient(130deg,var(--purple),#5B3FE0);border-radius:var(--rXL);padding:72px 48px;text-align:center;position:relative;overflow:hidden;margin:0 24px 80px}
+.beta-band::before{content:"";position:absolute;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.05);top:-100px;right:-80px;pointer-events:none}
+.beta-band h2{color:#fff;font-size:clamp(26px,4vw,44px);margin-bottom:14px}
+.beta-band p{color:rgba(255,255,255,.7);font-size:17px;margin-bottom:32px;font-weight:600}
+.beta-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:480px;margin:0 auto}
+.beta-input{flex:1;min-width:220px;padding:14px 20px;font-family:"Nunito Sans",sans-serif;font-size:15px;font-weight:600;border-radius:var(--rPill);border:2px solid rgba(255,255,255,.2);outline:none;background:rgba(255,255,255,.12);color:#fff;transition:border-color .18s}
+.beta-input::placeholder{color:rgba(255,255,255,.45)}
+.beta-input:focus{border-color:rgba(255,255,255,.5)}
+.beta-btn{font-family:"Nunito",sans-serif;font-weight:800;font-size:15px;background:#fff;color:var(--purple);border:none;padding:14px 28px;border-radius:var(--rPill);cursor:pointer;white-space:nowrap;transition:all .18s;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.beta-btn:hover{background:var(--sun);color:var(--ink)}
+
+/* FOOTER */
+footer{padding:40px;display:flex;align-items:center;justify-content:space-between;border-top:2px solid var(--border);flex-wrap:wrap;gap:14px}
+.foot-logo{font-family:"Nunito",sans-serif;font-weight:900;font-size:20px;color:var(--ink)}
+.foot-logo span{color:var(--coral)}
+.foot-pip{width:6px;height:6px;border-radius:50%;background:var(--coral);margin-left:2px;margin-bottom:6px;display:inline-block}
+footer p{font-size:13px;color:var(--muted);font-weight:600}
+.foot-links{display:flex;gap:2px}
+.foot-links a{font-size:13px;font-weight:700;color:var(--muted);padding:5px 11px;border-radius:var(--rPill);transition:all .18s}
+.foot-links a:hover{color:var(--purple);background:var(--purple-lt)}
+
+@media(max-width:860px){
+  nav{padding:0 18px}
+  nav ul{display:none}
+  .phones-section{gap:10px}
+  .db-inner{grid-template-columns:1fr}
+  .db-side{display:none}
+  .vis-grid{grid-template-columns:1fr}
+  section{padding:72px 18px}
+  .beta-band{padding:48px 24px;margin:0 16px 60px}
+  footer{padding:32px 18px;flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">buildable<span>kids</span><span class="foot-pip"></span></div>
+  <ul>
+    <li><a href="#create">Create</a></li>
+    <li><a href="#explore">Explore</a></li>
+    <li><a href="#learn">For Parents</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-login">Log in</button>
+    <button class="nav-cta" onclick="document.getElementById('beta').scrollIntoView({behavior:'smooth'})">Sign Up for Beta</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-chip"><span class="chip-dot"></span>Safe AI for kids &amp; families &mdash; ages 4 to 12</div>
+  <h1>Build it.<br><span class="h1-2">Play it forever.</span><br><span class="h1-3">Learn along the way.</span></h1>
+  <p class="hero-sub">Kids and parents describe any game they can imagine. AI builds it. Then keep playing, upgrading, and sharing it with the world &mdash; while math, spelling, and science sneak in through the fun.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('beta').scrollIntoView({behavior:'smooth'})">Sign Up for Beta</button>
+    <button class="btn-ghost" onclick="document.getElementById('create').scrollIntoView({behavior:'smooth'})">See how it works ↓</button>
+  </div>
+
+  <!-- 3 phone mockups — pure HTML/CSS, identical size -->
+  <div style="display:flex;gap:24px;justify-content:center;align-items:flex-start;z-index:1;position:relative;width:100%;max-width:960px;flex-wrap:wrap">
+
+    <!-- PHONE 1: AI Builder Chat -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;flex:1;min-width:220px;max-width:280px">
+      <div style="width:100%;background:#1A1A2E;border-radius:44px;padding:12px;box-shadow:0 28px 60px rgba(30,31,46,.28),0 0 0 1px rgba(255,255,255,.07)">
+        <!-- dynamic island -->
+        <div style="background:#0A0A1A;width:110px;height:22px;border-radius:11px;margin:0 auto 10px"></div>
+        <!-- screen -->
+        <div style="background:#0D0F1A;border-radius:32px;overflow:hidden">
+          <!-- status bar -->
+          <div style="background:#1A1A2E;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.05)">
+            <span style="font-family:Nunito,sans-serif;font-weight:900;font-size:14px;color:#fff">buildable<span style="color:#FF6B6B">.</span></span>
+            <span style="font-size:11px;color:rgba(255,255,255,.45);font-weight:600">9:41</span>
+          </div>
+          <!-- chat content -->
+          <div style="padding:14px 14px 0">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <span style="font-family:Nunito,sans-serif;font-weight:800;font-size:13px;color:#fff">New Project — Fairy Garden Game</span>
+              <span style="font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#A78BFF;background:rgba(167,139,255,.14);border:1px solid rgba(167,139,255,.3);border-radius:100px;padding:3px 8px;flex-shrink:0;margin-left:6px">BUILDING</span>
+            </div>
+            <!-- user bubble -->
+            <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
+              <div style="max-width:82%;background:linear-gradient(135deg,#7C5CFC,#9B6FFF);color:#fff;border-radius:14px 14px 4px 14px;padding:10px 13px;font-size:12px;line-height:1.55;font-weight:600">I want to make a fairy game in a garden with bees and snakes to dodge, flowers and fruit to collect!</div>
+            </div>
+            <!-- ai bubble -->
+            <div style="display:flex;margin-bottom:10px">
+              <div style="max-width:85%;background:#1C1F30;color:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.07);border-radius:14px 14px 14px 4px;padding:10px 13px;font-size:12px;line-height:1.55;font-weight:600">Love it! Building your Fairy Garden now — 5 levels, bees, snakes, fruit weapons, and a boss on each level!</div>
+            </div>
+            <!-- typing -->
+            <div style="display:flex;align-items:center;gap:5px;background:#1C1F30;border:1px solid rgba(255,255,255,.07);border-radius:14px 14px 14px 4px;padding:10px 13px;width:fit-content;margin-bottom:14px">
+              <div style="width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.35)"></div>
+              <div style="width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.35)"></div>
+              <div style="width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.35)"></div>
+              <span style="font-size:11px;color:rgba(255,255,255,.35);margin-left:3px">Building Level 1 of 5...</span>
+            </div>
+          </div>
+          <!-- progress bar -->
+          <div style="padding:12px 14px;background:#111320;border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:10px">
+            <div style="flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="height:100%;width:68%;background:linear-gradient(90deg,#7C5CFC,#FF6B6B);border-radius:3px"></div></div>
+            <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,.35);white-space:nowrap">Creating...</span>
+          </div>
+          <!-- home indicator -->
+          <div style="height:28px;background:#0D0F1A;display:flex;align-items:center;justify-content:center">
+            <div style="width:90px;height:4px;background:rgba(255,255,255,.2);border-radius:2px"></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div style="display:inline-block;font-family:Nunito,sans-serif;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;background:#F0EDFF;color:#7C5CFC;border-radius:100px;padding:4px 12px;margin-bottom:6px">Step 1</div>
+        <div style="font-size:13px;font-weight:700;color:#3D3F56">Tell the AI what to build</div>
+      </div>
+    </div>
+
+    <!-- PHONE 2: Game Playing -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;flex:1;min-width:220px;max-width:280px">
+      <div style="width:100%;background:#1A1A2E;border-radius:44px;padding:12px;box-shadow:0 28px 60px rgba(30,31,46,.28),0 0 0 1px rgba(255,255,255,.07)">
+        <div style="background:#0A0A1A;width:110px;height:22px;border-radius:11px;margin:0 auto 10px"></div>
+        <div style="background:#87CEEB;border-radius:32px;overflow:hidden">
+          <!-- status bar over game -->
+          <div style="background:rgba(0,0,0,.3);height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 16px">
+            <span style="font-family:Nunito,sans-serif;font-weight:900;font-size:14px;color:#fff">buildable<span style="color:#FF6B6B">.</span></span>
+            <span style="font-size:11px;color:rgba(255,255,255,.7);font-weight:600">9:41</span>
+          </div>
+          <!-- game area -->
+          <div style="background:linear-gradient(180deg,#87CEEB 0%,#B5E8C0 60%,#52B048 100%);height:380px;position:relative;overflow:hidden">
+            <!-- clouds -->
+            <div style="position:absolute;width:76px;height:28px;background:rgba(255,255,255,.85);border-radius:40px;top:22px;left:36px"></div>
+            <div style="position:absolute;width:56px;height:22px;background:rgba(255,255,255,.8);border-radius:40px;top:15px;right:52px"></div>
+            <!-- HUD -->
+            <div style="position:absolute;top:0;left:0;right:0;background:linear-gradient(to bottom,rgba(0,0,0,.4),transparent);padding:8px 14px 16px;display:flex;justify-content:space-between">
+              <div>
+                <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.65)">LEVEL 2 — APPLE ORCHARD</div>
+                <div style="font-family:Nunito,sans-serif;font-size:18px;font-weight:900;color:#fff">⭐ 120</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-size:15px">🍯🍯🍯</div>
+                <div style="font-size:9px;color:rgba(255,255,255,.5);font-weight:700;margin-top:2px">Collect fruit!</div>
+              </div>
+            </div>
+            <!-- items -->
+            <div style="position:absolute;top:22%;left:16%;font-size:24px">🐝</div>
+            <div style="position:absolute;top:36%;right:18%;font-size:22px">🐝</div>
+            <div style="position:absolute;top:28%;right:28%;font-size:18px">🐍</div>
+            <div style="position:absolute;top:20%;left:46%;font-size:22px">🌻</div>
+            <div style="position:absolute;top:14%;left:34%;font-size:20px">🍓</div>
+            <div style="position:absolute;top:42%;left:20%;font-size:18px">🍊</div>
+            <!-- fairy -->
+            <div style="position:absolute;bottom:72px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center">
+              <div style="width:52px;height:20px;position:relative;margin-bottom:-3px">
+                <div style="position:absolute;left:0;width:22px;height:17px;border-radius:50%;background:rgba(200,160,255,.65);transform:rotate(-15deg)"></div>
+                <div style="position:absolute;right:0;width:22px;height:17px;border-radius:50%;background:rgba(200,160,255,.65);transform:rotate(15deg)"></div>
+              </div>
+              <div style="width:28px;height:42px;background:linear-gradient(180deg,#FFB3D9,#FF4D8A);border-radius:5px 5px 12px 12px;position:relative">
+                <div style="width:24px;height:24px;background:#FDDBB4;border-radius:50%;position:absolute;top:-15px;left:50%;transform:translateX(-50%)"></div>
+              </div>
+            </div>
+            <!-- ground -->
+            <div style="position:absolute;bottom:0;left:0;right:0;height:58px;background:#4CAF50"></div>
+            <div style="position:absolute;bottom:55px;left:0;right:0;height:10px;background:#64BB50;border-radius:50% 50% 0 0/80% 80% 0 0"></div>
+            <!-- weapon bar -->
+            <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px">
+              <div style="background:rgba(124,92,252,.7);border:1.5px solid rgba(167,139,255,.8);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:800;color:#fff">✨ Fairy Dust</div>
+              <div style="background:rgba(0,0,0,.55);border:1.5px solid rgba(255,255,255,.2);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:800;color:#fff">💥 Bomb</div>
+              <div style="background:rgba(0,0,0,.45);border:1.5px solid rgba(255,255,255,.15);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:800;color:rgba(255,255,255,.4)">🔒</div>
+            </div>
+          </div>
+          <div style="height:28px;background:#4CAF50;display:flex;align-items:center;justify-content:center">
+            <div style="width:90px;height:4px;background:rgba(255,255,255,.25);border-radius:2px"></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div style="display:inline-block;font-family:Nunito,sans-serif;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;background:#E5FAF4;color:#007A5E;border-radius:100px;padding:4px 12px;margin-bottom:6px">Step 2</div>
+        <div style="font-size:13px;font-weight:700;color:#3D3F56">Play what you created</div>
+      </div>
+    </div>
+
+    <!-- PHONE 3: Quiz -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;flex:1;min-width:220px;max-width:280px">
+      <div style="width:100%;background:#1A1A2E;border-radius:44px;padding:12px;box-shadow:0 28px 60px rgba(30,31,46,.28),0 0 0 1px rgba(255,255,255,.07)">
+        <div style="background:#0A0A1A;width:110px;height:22px;border-radius:11px;margin:0 auto 10px"></div>
+        <div style="background:#0D0820;border-radius:32px;overflow:hidden">
+          <div style="background:#090616;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.05)">
+            <span style="font-family:Nunito,sans-serif;font-weight:900;font-size:14px;color:#fff">buildable<span style="color:#FF6B6B">.</span></span>
+            <span style="font-size:11px;color:rgba(255,255,255,.4);font-weight:600">9:41</span>
+          </div>
+          <div style="padding:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+              <span style="font-family:Nunito,sans-serif;font-size:12px;font-weight:800;color:#fff">Level 2 Unlock — Answer 3</span>
+              <div style="display:flex;gap:3px"><div style="width:14px;height:4px;border-radius:2px;background:#00C48C"></div><div style="width:14px;height:4px;border-radius:2px;background:#7C5CFC"></div><div style="width:14px;height:4px;border-radius:2px;background:rgba(255,255,255,.12)"></div></div>
+            </div>
+            <div style="display:flex;gap:5px;margin-bottom:12px">
+              <div style="font-family:Nunito,sans-serif;font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;background:#7C5CFC;border:1px solid #7C5CFC;color:#fff">Math</div>
+              <div style="font-family:Nunito,sans-serif;font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.42)">Spelling</div>
+            </div>
+            <div style="background:#190F30;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:14px">
+              <div style="display:inline-block;font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#FFB300;background:rgba(255,179,0,.1);border:1px solid rgba(255,179,0,.22);border-radius:100px;padding:3px 10px;margin-bottom:10px">MATH — AGE 8</div>
+              <div style="font-family:Nunito,sans-serif;font-size:14px;font-weight:800;color:#fff;line-height:1.4;margin-bottom:12px">The fairy collected 8 flowers and found 7 more. How many total?</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px">
+                <div style="background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 8px;font-family:Nunito,sans-serif;font-size:13px;font-weight:800;color:#fff;text-align:center">13</div>
+                <div style="background:rgba(0,196,140,.2);border:2px solid #00C48C;border-radius:10px;padding:10px 8px;font-family:Nunito,sans-serif;font-size:13px;font-weight:800;color:#00D4A0;text-align:center">15 ✓</div>
+                <div style="background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 8px;font-family:Nunito,sans-serif;font-size:13px;font-weight:800;color:#fff;text-align:center">16</div>
+                <div style="background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 8px;font-family:Nunito,sans-serif;font-size:13px;font-weight:800;color:#fff;text-align:center">14</div>
+              </div>
+              <div style="font-family:Nunito,sans-serif;font-size:12px;font-weight:800;color:#00D4A0">🎉 Correct! Next question unlocked!</div>
+            </div>
+          </div>
+          <div style="height:28px;background:#0D0820;display:flex;align-items:center;justify-content:center">
+            <div style="width:90px;height:4px;background:rgba(255,255,255,.15);border-radius:2px"></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div style="display:inline-block;font-family:Nunito,sans-serif;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;background:#FFF8E0;color:#8A6000;border-radius:100px;padding:4px 12px;margin-bottom:6px">Step 3</div>
+        <div style="font-size:13px;font-weight:700;color:#3D3F56">Answer questions to keep going</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- IT NEVER ENDS / LIFECYCLE -->
+<section id="create" style="background:var(--white);border-top:2px solid var(--border)">
+  <div class="wrap">
+    <div class="eyebrow">How it works</div>
+    <h2>Your game is never finished.<br>It grows with you.</h2>
+    <p class="sub">Build it once, then keep going. Add new levels, change characters, unlock new bosses. Every update deepens the learning.</p>
+    <div class="lifecycle">
+      <div class="lc-step">
+        <div class="lc-arrow">→</div>
+        <div class="lc-num">01</div>
+        <span class="lc-icon">💬</span>
+        <div class="lc-title">Describe it</div>
+        <div class="lc-desc">Tell the AI your idea in plain words. Fairies, dragons, space — anything you can imagine.</div>
+      </div>
+      <div class="lc-step">
+        <div class="lc-arrow">→</div>
+        <div class="lc-num">02</div>
+        <span class="lc-icon">⚡</span>
+        <div class="lc-title">AI builds it</div>
+        <div class="lc-desc">Your game appears in seconds — with levels, characters, enemies, music, and weapons.</div>
+      </div>
+      <div class="lc-step">
+        <div class="lc-arrow">→</div>
+        <div class="lc-num">03</div>
+        <span class="lc-icon">🎮</span>
+        <div class="lc-title">Play it</div>
+        <div class="lc-desc">Jump in and start playing. Math and spelling questions unlock new levels as you go.</div>
+      </div>
+      <div class="lc-step">
+        <div class="lc-arrow">→</div>
+        <div class="lc-num">04</div>
+        <span class="lc-icon">✏️</span>
+        <div class="lc-title">Customize it</div>
+        <div class="lc-desc">Add new levels, swap characters, change the world. The AI makes any update you can describe.</div>
+      </div>
+      <div class="lc-step">
+        <div class="lc-num">05</div>
+        <span class="lc-icon">🌍</span>
+        <div class="lc-title">Share it</div>
+        <div class="lc-desc">Publish your game to the buildable community. Other kids around the world can play it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREATION TYPES — Games focus, others coming soon -->
+<section style="background:var(--bg);border-top:2px solid var(--border)">
+  <div class="wrap">
+    <div class="eyebrow">What kids build</div>
+    <h2>Games now.<br>More coming soon.</h2>
+    <p class="sub">We're starting with games because that's where the magic is. Music, art, and animation are next.</p>
+    <div class="types-grid">
+      <div class="type-card" style="background:#FFF0F0;border-color:#FFCCCC">
+        <span class="tc-badge" style="background:#FFD6D6;color:#CC3333">Available Now</span>
+        <span class="tc-emoji">🎮</span>
+        <div class="tc-title" style="color:#CC3333">Games</div>
+        <div class="tc-desc" style="color:#884444">Describe your characters, worlds, and enemies. AI builds the levels. Play, customize, and keep going forever.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px"><span style="background:#FFD6D6;color:#CC3333;font-size:11px;font-weight:800;padding:4px 10px;border-radius:100px">Math</span><span style="background:#FFF0F0;color:#CC3333;font-size:11px;font-weight:800;padding:4px 10px;border-radius:100px;border:1px solid #FFCCCC">Spelling</span><span style="background:#FFF0F0;color:#CC3333;font-size:11px;font-weight:800;padding:4px 10px;border-radius:100px;border:1px solid #FFCCCC">Science</span><span style="background:#FFF0F0;color:#CC3333;font-size:11px;font-weight:800;padding:4px 10px;border-radius:100px;border:1px solid #FFCCCC">STEM</span></div>
+      </div>
+      <div class="type-card" style="background:#F8F8FA;border-color:#E0E0E8;opacity:.7">
+        <span class="coming-soon">Coming Soon</span>
+        <span class="tc-badge" style="background:#E8E8F0;color:#9090A8">Music</span>
+        <span class="tc-emoji" style="filter:grayscale(.6)">🎵</span>
+        <div class="tc-title" style="color:#9090A8">Music</div>
+        <div class="tc-desc" style="color:#A8A8BC">Compose original songs with AI. Rhythm, fractions, counting patterns, and music theory woven through every creation.</div>
+        <span class="tc-tag" style="background:#E8E8F0;color:#A0A0B8">Counting patterns unlock instruments</span>
+      </div>
+      <div class="type-card" style="background:#F8F8FA;border-color:#E0E0E8;opacity:.7">
+        <span class="coming-soon">Coming Soon</span>
+        <span class="tc-badge" style="background:#E8E8F0;color:#9090A8">Animation</span>
+        <span class="tc-emoji" style="filter:grayscale(.6)">🎬</span>
+        <div class="tc-title" style="color:#9090A8">Animation</div>
+        <div class="tc-desc" style="color:#A8A8BC">Bring characters to life. Spelling, vocabulary, sentence structure, and storytelling embedded in every scene.</div>
+        <span class="tc-tag" style="background:#E8E8F0;color:#A0A0B8">Spelling unlocks new characters</span>
+      </div>
+      <div class="type-card" style="background:#F8F8FA;border-color:#E0E0E8;opacity:.7">
+        <span class="coming-soon">Coming Soon</span>
+        <span class="tc-badge" style="background:#E8E8F0;color:#9090A8">Art</span>
+        <span class="tc-emoji" style="filter:grayscale(.6)">🎨</span>
+        <div class="tc-title" style="color:#9090A8">Art</div>
+        <div class="tc-desc" style="color:#A8A8BC">Generate original illustrations. Geometry, symmetry, fractions, and color science woven into every creation.</div>
+        <span class="tc-tag" style="background:#E8E8F0;color:#A0A0B8">Geometry unlocks new art styles</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PUBLIC / PRIVATE -->
+<section style="background:var(--white);border-top:2px solid var(--border)">
+  <div class="wrap">
+    <div class="eyebrow">Your games, your rules</div>
+    <h2>Keep it private or publish<br>to the buildable arcade.</h2>
+    <p class="sub">Every game you build lives in your space. You decide who gets to play it.</p>
+    <div class="vis-grid">
+      <div class="vis-card pub">
+        <span class="vis-icon">🌍</span>
+        <div class="vis-h" style="color:var(--mint)">Public</div>
+        <div class="vis-desc">Publish your game to the buildable arcade. Other kids can play it, heart it, and leave comments. See how many plays and hearts you can rack up.</div>
+        <ul class="vis-list">
+          <li>Visible to the buildable community</li>
+          <li>Earns hearts, plays, and ratings</li>
+          <li>Appears in the public arcade</li>
+          <li>Parents review before publishing</li>
+        </ul>
+      </div>
+      <div class="vis-card prv">
+        <span class="vis-icon">🔒</span>
+        <div class="vis-h" style="color:var(--purple)">Private</div>
+        <div class="vis-desc">Keep your game just for you and your family. Share it with specific people via a link. Great for gifts, class projects, or games still in progress.</div>
+        <ul class="vis-list">
+          <li>Only visible to you and your family</li>
+          <li>Share with anyone via private link</li>
+          <li>Share with your class or teacher</li>
+          <li>Switch to public any time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETPLACE -->
+<section id="explore" style="background:var(--white);border-top:2px solid var(--border)">
+  <div class="wrap">
+    <div class="market-header">
+      <div>
+        <div class="eyebrow">Community</div>
+        <h2>The top 10 games<br>built by kids worldwide.</h2>
+        <p style="font-size:16px;color:var(--ink2);font-weight:600;margin-top:8px;max-width:480px">Every published game lives in the buildable arcade. Browse the leaderboard, play your favorites, and heart the ones you love.</p>
+      </div>
+      <div class="market-tabs">
+        <div class="mtab on">🔥 This Week</div>
+        <div class="mtab">⭐ All Time</div>
+        <div class="mtab">✨ New</div>
+      </div>
+    </div>
+
+    <!-- TOP 10 LIST -->
+    <div style="display:flex;flex-direction:column;gap:0;border:2px solid var(--border);border-radius:var(--rXL);overflow:hidden;background:var(--white)">
+      <!-- header row -->
+      <div style="display:grid;grid-template-columns:44px 48px 1fr 100px 90px 80px 70px;align-items:center;padding:10px 20px;background:var(--bg);border-bottom:2px solid var(--border);font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">
+        <div></div><div></div><div>Game</div><div style="text-align:center">Plays</div><div style="text-align:center">Hearts</div><div style="text-align:center">Rating</div><div></div>
+      </div>
+      <div class="top-row" style="display:grid;grid-template-columns:44px 48px 1fr 100px 90px 80px 70px;align-items:center;padding:14px 20px;border-bottom:2px solid var(--border);transition:background .15s;cursor:pointer" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background=''">
+        <div style="font-family:Nunito,sans-serif;font-weight:900;font-size:22px;color:var(--sun)">🥇</div>
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#87CEEB,#5CB85C);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🌸</div>
+        <div style="padding:0 12px;min-width:0">
+          <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Fairy Garden Adventure</div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:1px">by Riley, age 7</div>
+        </div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--muted)">▶ 4,201</div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--coral)">❤️ 1,284</div>
+        <div style="text-align:center">
+          <span style="background:rgba(0,196,140,.12);color:var(--mint);font-size:12px;font-weight:800;padding:3px 8px;border-radius:6px">⭐ 4.9</span>
+        </div>
+        <div style="text-align:right">
+          <span style="background:var(--purple-lt);color:var(--purple);font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;white-space:nowrap">▶ Play</span>
+        </div>
+      </div>
+      <div class="top-row" style="display:grid;grid-template-columns:44px 48px 1fr 100px 90px 80px 70px;align-items:center;padding:14px 20px;border-bottom:2px solid var(--border);transition:background .15s;cursor:pointer" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background=''">
+        <div style="font-family:Nunito,sans-serif;font-weight:900;font-size:16px;color:var(--coral)">🥈</div>
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#0d1b4b,#1a3a6e);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🚀</div>
+        <div style="padding:0 12px;min-width:0">
+          <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Space Invaders 2077</div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:1px">by Marco, age 9</div>
+        </div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--muted)">▶ 3,104</div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--coral)">❤️ 892</div>
+        <div style="text-align:center">
+          <span style="background:rgba(0,196,140,.12);color:var(--mint);font-size:12px;font-weight:800;padding:3px 8px;border-radius:6px">⭐ 4.8</span>
+        </div>
+        <div style="text-align:right">
+          <span style="background:var(--purple-lt);color:var(--purple);font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;white-space:nowrap">▶ Play</span>
+        </div>
+      </div>
+      <div class="top-row" style="display:grid;grid-template-columns:44px 48px 1fr 100px 90px 80px 70px;align-items:center;padding:14px 20px;border-bottom:2px solid var(--border);transition:background .15s;cursor:pointer" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background=''">
+        <div style="font-family:Nunito,sans-serif;font-weight:900;font-size:16px;color:var(--muted)">🥉</div>
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#2d1b69,#11998e);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🐉</div>
+        <div style="padding:0 12px;min-width:0">
+          <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Dragon Kingdom</div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:1px">by Zoe, age 11</div>
+        </div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--muted)">▶ 2,887</div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--coral)">❤️ 743</div>
+        <div style="text-align:center">
+          <span style="background:rgba(255,179,0,.12);color:var(--sun);font-size:12px;font-weight:800;padding:3px 8px;border-radius:6px">⭐ 4.7</span>
+        </div>
+        <div style="text-align:right">
+          <span style="background:var(--purple-lt);color:var(--purple);font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;white-space:nowrap">▶ Play</span>
+        </div>
+      </div>
+      <div class="top-row" style="display:grid;grid-template-columns:44px 48px 1fr 100px 90px 80px 70px;align-items:center;padding:14px 20px;border-bottom:2px solid var(--border);transition:background .15s;cursor:pointer" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background=''">
+        <div style="font-family:Nunito,sans-serif;font-weight:900;font-size:16px;color:var(--muted)">4</div>
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#ff8c00,#ffe066);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🐻</div>
+        <div style="padding:0 12px;min-width:0">
+          <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Honey Bear Quest</div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:1px">by Aiden, age 6</div>
+        </div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--muted)">▶ 2,103</div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--coral)">❤️ 621</div>
+        <div style="text-align:center">
+          <span style="background:rgba(255,179,0,.12);color:var(--sun);font-size:12px;font-weight:800;padding:3px 8px;border-radius:6px">⭐ 4.6</span>
+        </div>
+        <div style="text-align:right">
+          <span style="background:var(--purple-lt);color:var(--purple);font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;white-space:nowrap">▶ Play</span>
+        </div>
+      </div>
+      <div class="top-row" style="display:grid;grid-template-columns:44px 48px 1fr 100px 90px 80px 70px;align-items:center;padding:14px 20px;border-bottom:2px solid var(--border);transition:background .15s;cursor:pointer" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background=''">
+        <div style="font-family:Nunito,sans-serif;font-weight:900;font-size:16px;color:var(--muted)">5</div>
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#1a1d35,#2d3561);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🌊</div>
+        <div style="padding:0 12px;min-width:0">
+          <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Ocean Explorer</div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:1px">by Sofia, age 10</div>
+        </div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--muted)">▶ 1,892</div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--coral)">❤️ 518</div>
+        <div style="text-align:center">
+          <span style="background:rgba(255,179,0,.12);color:var(--sun);font-size:12px;font-weight:800;padding:3px 8px;border-radius:6px">⭐ 4.6</span>
+        </div>
+        <div style="text-align:right">
+          <span style="background:var(--purple-lt);color:var(--purple);font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;white-space:nowrap">▶ Play</span>
+        </div>
+      </div>
+      <div class="top-row" style="display:grid;grid-template-columns:44px 48px 1fr 100px 90px 80px 70px;align-items:center;padding:14px 20px;border-bottom:2px solid var(--border);transition:background .15s;cursor:pointer" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background=''">
+        <div style="font-family:Nunito,sans-serif;font-weight:900;font-size:16px;color:var(--muted)">6</div>
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#2d5a27,#a8d658);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🦕</div>
+        <div style="padding:0 12px;min-width:0">
+          <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Dino Dash</div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:1px">by Liam, age 8</div>
+        </div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--muted)">▶ 1,644</div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--coral)">❤️ 447</div>
+        <div style="text-align:center">
+          <span style="background:rgba(255,179,0,.12);color:var(--sun);font-size:12px;font-weight:800;padding:3px 8px;border-radius:6px">⭐ 4.5</span>
+        </div>
+        <div style="text-align:right">
+          <span style="background:var(--purple-lt);color:var(--purple);font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;white-space:nowrap">▶ Play</span>
+        </div>
+      </div>
+      <div class="top-row" style="display:grid;grid-template-columns:44px 48px 1fr 100px 90px 80px 70px;align-items:center;padding:14px 20px;border-bottom:2px solid var(--border);transition:background .15s;cursor:pointer" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background=''">
+        <div style="font-family:Nunito,sans-serif;font-weight:900;font-size:16px;color:var(--muted)">7</div>
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#1a0035,#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💎</div>
+        <div style="padding:0 12px;min-width:0">
+          <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Crystal Caves</div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:1px">by Mia, age 9</div>
+        </div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--muted)">▶ 1,320</div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--coral)">❤️ 389</div>
+        <div style="text-align:center">
+          <span style="background:rgba(255,179,0,.12);color:var(--sun);font-size:12px;font-weight:800;padding:3px 8px;border-radius:6px">⭐ 4.5</span>
+        </div>
+        <div style="text-align:right">
+          <span style="background:var(--purple-lt);color:var(--purple);font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;white-space:nowrap">▶ Play</span>
+        </div>
+      </div>
+      <div class="top-row" style="display:grid;grid-template-columns:44px 48px 1fr 100px 90px 80px 70px;align-items:center;padding:14px 20px;border-bottom:2px solid var(--border);transition:background .15s;cursor:pointer" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background=''">
+        <div style="font-family:Nunito,sans-serif;font-weight:900;font-size:16px;color:var(--muted)">8</div>
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#7f1d1d,#ef4444);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🌋</div>
+        <div style="padding:0 12px;min-width:0">
+          <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Volcano Island</div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:1px">by Noah, age 10</div>
+        </div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--muted)">▶ 1,198</div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--coral)">❤️ 312</div>
+        <div style="text-align:center">
+          <span style="background:rgba(255,179,0,.12);color:var(--sun);font-size:12px;font-weight:800;padding:3px 8px;border-radius:6px">⭐ 4.4</span>
+        </div>
+        <div style="text-align:right">
+          <span style="background:var(--purple-lt);color:var(--purple);font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;white-space:nowrap">▶ Play</span>
+        </div>
+      </div>
+      <div class="top-row" style="display:grid;grid-template-columns:44px 48px 1fr 100px 90px 80px 70px;align-items:center;padding:14px 20px;border-bottom:2px solid var(--border);transition:background .15s;cursor:pointer" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background=''">
+        <div style="font-family:Nunito,sans-serif;font-weight:900;font-size:16px;color:var(--muted)">9</div>
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#1e40af,#60a5fa);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🫧</div>
+        <div style="padding:0 12px;min-width:0">
+          <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Bubble World</div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:1px">by Emma, age 7</div>
+        </div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--muted)">▶ 998</div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--coral)">❤️ 278</div>
+        <div style="text-align:center">
+          <span style="background:rgba(255,179,0,.12);color:var(--sun);font-size:12px;font-weight:800;padding:3px 8px;border-radius:6px">⭐ 4.4</span>
+        </div>
+        <div style="text-align:right">
+          <span style="background:var(--purple-lt);color:var(--purple);font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;white-space:nowrap">▶ Play</span>
+        </div>
+      </div>
+      <div class="top-row last" style="display:grid;grid-template-columns:44px 48px 1fr 100px 90px 80px 70px;align-items:center;padding:14px 20px;border-bottom:none;transition:background .15s;cursor:pointer" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background=''">
+        <div style="font-family:Nunito,sans-serif;font-weight:900;font-size:16px;color:var(--muted)">10</div>
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#064e3b,#34d399);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🌲</div>
+        <div style="padding:0 12px;min-width:0">
+          <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Magic Forest</div>
+          <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:1px">by Ava, age 8</div>
+        </div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--muted)">▶ 887</div>
+        <div style="text-align:center;font-size:13px;font-weight:700;color:var(--coral)">❤️ 241</div>
+        <div style="text-align:center">
+          <span style="background:rgba(255,179,0,.12);color:var(--sun);font-size:12px;font-weight:800;padding:3px 8px;border-radius:6px">⭐ 4.3</span>
+        </div>
+        <div style="text-align:right">
+          <span style="background:var(--purple-lt);color:var(--purple);font-size:11px;font-weight:800;padding:5px 12px;border-radius:100px;white-space:nowrap">▶ Play</span>
+        </div>
+      </div>
+      <!-- Build your own -->
+      <div style="padding:16px 20px;background:var(--purple-lt);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+        <div>
+          <div style="font-family:Nunito,sans-serif;font-weight:800;font-size:15px;color:var(--purple)">Your game could be here.</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:2px;font-weight:600">Sign up for beta and start building today.</div>
+        </div>
+        <button onclick="document.getElementById('beta').scrollIntoView({behavior:'smooth'})" style="font-family:Nunito,sans-serif;font-weight:800;font-size:13px;background:var(--purple);color:#fff;border:none;padding:10px 22px;border-radius:100px;cursor:pointer;white-space:nowrap">Sign Up for Beta</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PARENT DASHBOARD -->
+<section id="learn">
+  <div class="wrap">
+    <div class="eyebrow">For parents &amp; educators</div>
+    <h2>Know what your kid<br>learned this week.</h2>
+    <p class="sub">A clear weekly report shows every subject practiced. Set the difficulty yourself &mdash; and see exactly where your child needs more help.</p>
+    <div class="db-wrap">
+      <div class="db-bar">
+        <div class="db-dot" style="background:#FF5F57"></div>
+        <div class="db-dot" style="background:#FEBC2E"></div>
+        <div class="db-dot" style="background:#28C840"></div>
+        <div style="flex:1;margin:0 12px;background:rgba(255,255,255,.04);border-radius:6px;height:18px;display:flex;align-items:center;padding:0 10px">
+          <span style="font-size:11px;color:rgba(255,255,255,.2)">buildablekids.com/parent</span>
+        </div>
+      </div>
+      <div class="db-inner">
+        <div class="db-side">
+          <div class="db-sec-lbl">My Kids</div>
+          <div class="db-nav on">
+            <div class="db-nav-ico">🧒</div>
+            <div><div class="db-nav-lbl" style="color:#fff">Riley</div><div style="font-size:11px;color:rgba(255,255,255,.25)">Age 7 — Grade 2</div></div>
+          </div>
+          <div class="db-nav">
+            <div class="db-nav-ico">👦</div>
+            <div><div class="db-nav-lbl">Jake</div><div style="font-size:11px;color:rgba(255,255,255,.2)">Age 10 — Grade 5</div></div>
+          </div>
+          <div class="db-sec-lbl">Tools</div>
+          <div class="db-nav"><div class="db-nav-ico">📊</div><div class="db-nav-lbl">Progress</div></div>
+          <div class="db-nav"><div class="db-nav-ico">🎮</div><div class="db-nav-lbl">Their Games</div></div>
+          <div class="db-nav"><div class="db-nav-ico">⚙️</div><div class="db-nav-lbl">Settings</div></div>
+        </div>
+        <div class="db-main">
+          <div class="db-hdr">
+            <div>
+              <div class="db-name">Riley's Week — Apr 14–20</div>
+              <div class="db-meta">Playing: Fairy Garden Game (Level 3)</div>
+            </div>
+            <div class="db-pill">42 min this week</div>
+          </div>
+          <div class="db-stats">
+            <div class="db-stat"><div class="db-stat-n">21</div><div class="db-stat-l">Questions answered</div></div>
+            <div class="db-stat"><div class="db-stat-n" style="color:var(--mint)">86%</div><div class="db-stat-l">Correct this week</div></div>
+            <div class="db-stat"><div class="db-stat-n" style="color:var(--sun)">Level 3</div><div class="db-stat-l">Game progress</div></div>
+          </div>
+          <div>
+            <div class="db-section-hdr">Subject breakdown</div>
+            <div class="subj-row">
+              <div class="subj-name">Addition</div>
+              <div class="subj-bar-bg"><div class="subj-bar" style="width:92%;background:var(--mint)"></div></div>
+              <div class="subj-score" style="color:var(--mint)">9/10</div>
+            </div>
+            <div class="subj-row">
+              <div class="subj-name">Spelling</div>
+              <div class="subj-bar-bg"><div class="subj-bar" style="width:87%;background:var(--sky)"></div></div>
+              <div class="subj-score" style="color:var(--sky)">7/8</div>
+            </div>
+            <div class="subj-row">
+              <div class="subj-name">Geometry</div>
+              <div class="subj-bar-bg"><div class="subj-bar" style="width:62%;background:var(--sun)"></div></div>
+              <div class="subj-score" style="color:var(--sun)">5/8</div>
+            </div>
+          </div>
+          <div class="diff-box">
+            <div class="diff-lbl">Question difficulty for Riley</div>
+            <div class="diff-btns">
+              <button class="diff-btn easy" onclick="setDiff('easy',this)">Easy</button>
+              <button class="diff-btn med on" onclick="setDiff('med',this)">Medium</button>
+              <button class="diff-btn hard" onclick="setDiff('hard',this)">Hard</button>
+            </div>
+            <div class="diff-note" id="diffNote">Currently Medium — matching Grade 2 standard</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PRICING -->
+<section id="pricing" style="background:var(--bg);border-top:2px solid var(--border)">
+  <div class="wrap">
+    <div class="eyebrow">Pricing</div>
+    <h2>Start free. Grow together.</h2>
+    <p class="sub">One full game is always free. No credit card. No tricks.</p>
+    <div class="price-grid">
+      <div class="pc">
+        <div class="p-tier">Free</div>
+        <div class="p-amt"><sup>$</sup>0</div>
+        <div class="p-per">always free</div>
+        <div class="p-div"></div>
+        <ul class="p-feats">
+          <li>1 game with 3 levels</li>
+          <li>Unlimited play &amp; customization</li>
+          <li>Age-matched questions</li>
+          <li>Publish to the arcade</li>
+          <li class="off">Unlimited games</li>
+          <li class="off">Parent dashboard</li>
+        </ul>
+        <button class="p-btn ghost" onclick="document.getElementById('beta').scrollIntoView({behavior:'smooth'})">Sign Up for Beta</button>
+      </div>
+      <div class="pc feat">
+        <div class="feat-badge">Most Popular</div>
+        <div class="p-tier">Family</div>
+        <div class="p-amt"><sup>$</sup>9</div>
+        <div class="p-per">per month &mdash; up to 4 kids</div>
+        <div class="p-div"></div>
+        <ul class="p-feats">
+          <li>Unlimited games &amp; levels</li>
+          <li>Unlimited play &amp; customization</li>
+          <li>Advanced AI models</li>
+          <li>Full parent dashboard</li>
+          <li>Weekly learning reports</li>
+          <li>Difficulty controls</li>
+          <li>Public &amp; private sharing</li>
+          <li>Priority rendering</li>
+        </ul>
+        <button class="p-btn fill" onclick="document.getElementById('beta').scrollIntoView({behavior:'smooth'})">Join the Beta</button>
+      </div>
+      <div class="pc">
+        <div class="p-tier">School</div>
+        <div class="p-amt"><sup>$</sup>4</div>
+        <div class="p-per">per student / month</div>
+        <div class="p-div"></div>
+        <ul class="p-feats">
+          <li>Everything in Family</li>
+          <li>Classroom dashboard</li>
+          <li>Curriculum alignment</li>
+          <li>Teacher difficulty controls</li>
+          <li>Classroom arcade</li>
+          <li>LMS integration</li>
+        </ul>
+        <button class="p-btn ghost">Contact Us</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BETA -->
+<div id="beta" class="beta-band">
+  <h2>Be the first to build.</h2>
+  <p>We're opening early access to a small group of families. Sign up and we'll reach out when your spot is ready.</p>
+  <div class="beta-form">
+    <input class="beta-input" type="email" placeholder="Your email address">
+    <button class="beta-btn">Sign Up for Beta</button>
+  </div>
+  <div style="margin-top:14px;font-size:12px;color:rgba(255,255,255,.4);font-weight:600">No spam. No credit card. Just early access.</div>
+</div>
+
+<footer>
+  <div class="foot-logo">buildable<span>kids</span><span class="foot-pip"></span></div>
+  <p>Safe AI for kids &amp; families &mdash; &copy; 2025 Buildable Kids Inc.</p>
+  <div class="foot-links">
+    <a href="#">Privacy</a><a href="#">Safety</a><a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+const notes={easy:"Currently Easy — simple counting and single-digit problems",med:"Currently Medium — matching Grade 2 standard",hard:"Currently Hard — challenging above-grade problems"};
+function setDiff(lvl,btn){
+  document.querySelectorAll(".diff-btn").forEach(b=>{b.classList.remove("on","easy","med","hard")});
+  btn.classList.add("on",lvl);
+  document.getElementById("diffNote").textContent=notes[lvl];
+}
+document.querySelectorAll(".mtab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".mtab").forEach(x=>x.classList.remove("on"));
+    t.classList.add("on");
+  });
+});
+</script>
+</body>
+</html>
